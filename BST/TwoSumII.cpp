@@ -1,6 +1,8 @@
+/*
+
 最常用的问题是对一个有序数组或者列表的查询，利用递归的方法,这样可以保证运行时间在O(lgn)：
 
-
+*/
 
  void BST(vector<int>&nums,int s,int e,int target,int& res)
     {
