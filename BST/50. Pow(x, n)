@@ -1,0 +1,48 @@
+
+/*
+
+  这题主要的难点就是一些特殊情况的处理，我们想把这个问题装化成一个基本的正数的正数次方的形式，因此需要进行一些预处理
+  
+  首先判断0次方的情况，另外由于我们要翻转负数的x，因此先对x为INT_MIN的情况进行考虑，求的pow，最后根据n的正负决定是否取倒数
+
+
+
+*/
+
+
+
+class Solution {
+public:
+    double power(double x, int n){
+        if(n == 0){
+            return 1;
+        }
+        if(n == 1){
+            return x;
+        }
+
+        double result = power(x,n>>1);
+        result *= result;
+        if((n & 1) == 1){
+            result *= x;
+        }
+        return result;
+    }
+
+    
+    double myPow(double x, int n) {
+        double res=1.0;
+        int flag=0;
+        if(n==0) return 1;
+        if(n==INT_MIN)
+        {
+            return 1/(power(x,INT_MAX)*x);
+        }
+        if(n<0){n=-n;flag=1;}
+        
+        double ans=power(x,n);
+        if(flag) return 1/ans;
+        return ans;
+    }
+        
+};
