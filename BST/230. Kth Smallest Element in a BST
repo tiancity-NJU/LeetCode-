@@ -1,0 +1,44 @@
+
+
+
+/*
+    
+    在二叉搜索树中寻找kth 小的元素
+    这种需要递归解决的最好使用相对方便的void型，将参数列表利用引用拉长一点，写法有点类似DFS
+     一种策略是传入k 和一个计数 count 当k==count 即找到
+     还有一种是传入k 每次k-- 直到k为0 道理一样
+    
+*/
+
+
+
+class Solution {
+public:
+    
+    //  返回长度
+    void Find(TreeNode* root,int k,int& count,int &ans,bool& over)
+    {
+        if(over) return;
+        if(root==NULL) return;
+        Find(root->left,k,count,ans,over);
+        count+=1;
+        if(count==k)
+        {
+            ans=root->val;
+            over=true;
+            return;
+        }
+        Find(root->right,k,count,ans,over);
+    
+    }
+    
+    int kthSmallest(TreeNode* root, int k) {
+        
+        int ans=0;
+        int count=0;
+
+        bool over=false;
+        Find(root,k,count,ans,over);
+        return ans;
+    }
+};
