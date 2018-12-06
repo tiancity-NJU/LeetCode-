@@ -24,6 +24,7 @@ public:
         while(k <= length) {
             // cur对应的值始终不变，nxt与tmp分别为cur后一位和后两位
             cur = pre -> next;
+            // k-1次操作
             for(int i = 0; i < k - 1; i++) {
                 ListNode* nxt = cur -> next;
                 ListNode* tmp = nxt -> next;
