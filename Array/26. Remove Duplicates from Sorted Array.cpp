@@ -28,7 +28,7 @@ public:
 
 
 /*
-autho: ypz
+author: ypz
 */
 
 class Solution {
