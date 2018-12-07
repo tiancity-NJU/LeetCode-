@@ -1,17 +1,19 @@
-
-
-
-
+/*
+  
+    最容易想到的方法就是DP，关键在于DP数组的设置以及状态转移方程
+    先是考虑一维，但是数值含义不好定义，后来一想，这种问题是一种很典型的考虑状态能不能传递的问题，所以采用二维数组，DP[i][j]代表s[i]->s[j]是否
+    是回文，然后向两边传递的问题，一开始  DP[i][i]=1   s[i]==s[i+1] -> DP[i][i+1]=1  这是对于奇回文 偶回文的初始化，接着只需要对步长迭代，将
+    DP向两边扩展即可。
+    和 97 题很像， 状态1的传递
+*/
 
 
 class Solution {
 public:
     string longestPalindrome(string s) {
-        
-        
+    
         vector<vector<int>>DP(s.size(),vector<int>(s.size(),0));
-        
-        
+          
         for(int i=0;i<s.size();i++)
         {
             DP[i][i]=1;
