@@ -1,6 +1,7 @@
 /*
 
   典型的two point问题，数组可以覆盖，比较简单
+  这种 in-place 的方法都可以考虑 two points
 
 */
 
