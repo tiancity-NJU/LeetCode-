@@ -1,0 +1,28 @@
+
+
+/*
+
+  典型位运算的题目，需要注意两点：  1的判断，1是4的0次方，  边界的判断，对于int，1最多左移31位而不是32位
+
+*/
+
+class Solution {
+public:
+    bool isPowerOfFour(int num) {
+        
+        int tmp=1;
+        int count=0;
+        if(num==1) return true;
+        while(count<31)
+        {
+            tmp=tmp<<1;
+            count++;
+            if(tmp==num)
+            {
+                if(count%2==0) return true;
+                else return false;
+            }
+        }
+        return false;
+    }
+};
