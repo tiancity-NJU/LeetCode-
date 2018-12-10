@@ -3,6 +3,7 @@ public:
 
     /*
     By backtracking
+    注意元素可以重复使用，因此在进入下一次回溯前不要删除当前元素。
     author: ypz
     */
     
