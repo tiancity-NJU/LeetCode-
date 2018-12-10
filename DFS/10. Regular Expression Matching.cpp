@@ -42,3 +42,40 @@ public:
     }
     
 };
+
+
+/*
+      利用带返回值的 DFS，从后往前匹配，这样才能确定哪个字符和*组合的
+      
+*/
+
+
+class Solution {
+public:
+    
+    bool DFS(string&s,string&p,int i,int j)
+    {
+        if(j<0)
+            if(i<0) return true;
+            else return false;
+        if(p[j]=='*')
+        {
+            if(j==0) return false;
+            if(i>=0&&(p[j-1]=='.'||s[i]==p[j-1]))
+                if(DFS(s,p,i-1,j))
+                    return true;
+            return DFS(s,p,i,j-2);
+        }
+        else
+        {
+            if(i<0) return false;
+            if(p[j]=='.'||s[i]==p[j]) return DFS(s,p,i-1,j-1);
+            else return false;
+        }
+    }
+    
+    bool isMatch(string s, string p)
+    {
+        return DFS(s,p,s.size()-1,p.size()-1);
+    }
+};
