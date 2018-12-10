@@ -1,11 +1,7 @@
 /*
-
   典型的递归方法，DFS遍历一遍即可，另外利用一个map映射数字和字母
-
+  author: ztc
 */
-
-
-
 
 class Solution {
 public:
@@ -37,10 +33,40 @@ public:
 		L.insert(pair<char, string>('8', "tuv"));
 		L.insert(pair<char, string>('9', "wxyz"));
 
-		
 		vector<string> res;
 		string s = "";
 		Count(digits, L, s, res);
 		return res;
 	}
+};
+
+
+/*
+By backtracking
+author: ypz
+*/
+
+class Solution {
+public:
+    
+    const vector<string> map = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    
+    void backTracking(vector<string> &ans, string &cur, int flag, string &digits) {
+        if(flag == digits.size()) ans.push_back(cur);
+        if(flag < digits.size()) {
+            for(auto c:map[digits[flag] - '2']) {
+                cur[flag] = c;
+                backTracking(ans, cur, flag + 1, digits);
+            }
+        }
+    }
+                
+    vector<string> letterCombinations(string digits) {
+        vector<string> result;
+        if(digits.size() == 0) return result;
+        string cur(digits.size(), '0');
+        backTracking(result, cur, 0, digits);
+        return result;
+    }        
+                
 };
