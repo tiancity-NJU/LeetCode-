@@ -6,9 +6,6 @@
 */
 
 
-
-
-
 class Solution {
 public:
     int romanToInt(string s) {
@@ -23,5 +20,39 @@ public:
             }
         }
         return ret;
+    }
+};
+
+
+/*
+    还有一种更方便的写法
+*/
+
+
+
+class Solution {
+public:
+    int romanToInt(string s) {
+        
+        unordered_map<char,int> M;
+        M['I']=1;
+        M['V']=5;
+        M['X']=10;
+        M['L']=50;
+        M['C']=100;
+        M['D']=500;
+        M['M']=1000;
+         
+        int pre=INT_MAX;
+        int now=0;
+        int total=0;
+        for(int i=0;i<s.size();i++)
+        {
+            now=M[s[i]];
+            if(now>pre) total+=now-2*pre;
+            else total+=now;
+            pre=now;
+        }
+        return total;  
     }
 };
