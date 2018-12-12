@@ -1,10 +1,7 @@
-
 /*
-
   难度不大，但是要写出来比较清晰的比较难，用map会比较好
-
+  author: ztc
 */
-
 
 class Solution {
 public:
@@ -23,12 +20,10 @@ public:
     }
 };
 
-
 /*
     还有一种更方便的写法
+    author: ztc
 */
-
-
 
 class Solution {
 public:
@@ -54,5 +49,27 @@ public:
             pre=now;
         }
         return total;  
+    }
+};
+
+/*
+author: ypz
+*/
+
+class Solution {
+public: 
+    int romanToInt(string s) {
+        string s_string = "IVXLCDM";
+        vector<int> s_int {1,5,10,50,100,500,1000};
+        int sum = 0;
+        for(int i = 0; i < s.size(); i++){
+            int index1 = s_string.find(s[i]);
+            sum += s_int[index1];
+            if(index1 % 2 == 0){
+                int index2 = s_string.find(s[i + 1]);
+                if(index1 < index2) sum += s_int[index1] * (-2);
+            }
+        }
+        return sum;
     }
 };
