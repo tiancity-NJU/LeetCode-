@@ -35,3 +35,46 @@ public:
         return ans;
     }
 };
+
+
+
+/*
+    另外一种写法，相比于上述方法具有更快的速度，思想是先将candidates排序，当去到的数超过target时，后面的都不需要递归了，缩短了时间
+    另外可以增加一个约束，即down，每次只能取down及其以上的数，避免了进入  3,2,2 2,3,2 这样的重复状态。
+*/
+
+class Solution {
+public:
+    
+    
+    void dfs(vector<int>&arr,int remain,vector<int>&one,vector<vector<int>>&ans,int down)
+    {
+        if(remain<0) return;
+        if(remain==0)
+        {
+            ans.push_back(one);
+            return;
+        }
+        
+        for(auto c:arr)
+        {
+            if(c<down) continue;
+            if(remain-c<0) break;
+            one.push_back(c);
+            dfs(arr,remain-c,one,ans,c);
+            one.pop_back();
+        }
+        
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+            
+        sort(candidates.begin(),candidates.end());
+        vector<vector<int>>ans;
+        vector<int>one;
+        int down=candidates[0];
+        dfs(candidates,target,one,ans,down);
+       
+        return ans;
+    }
+};
