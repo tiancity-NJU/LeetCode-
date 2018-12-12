@@ -1,7 +1,7 @@
 
 /*
     第一种办法是很直接的利用if else 构成的从大到小的解析，但是这样运算效率非常低下，利用map的形式会更加直观
-
+    author: ztc
 */
 
 class Solution {
@@ -99,5 +99,40 @@ public:
 
 
 /*
-      利用 unordered_map 的形式进行解决
+      author: ypz
 */
+class Solution {
+public:
+    string intToRoman(int num) {
+        string s_string = "MDCLXVI";
+        vector<int> s_int {1000,500,100,50,10,5,1};
+        int index = 0;
+        string result = "";
+        int amount;
+        while(num != 0){
+            if(num * 10 < s_int[index]){
+                index += 2;
+                continue;
+            }
+            amount = num / s_int[index];
+            if(amount >= 1 && amount <=3) result.append(amount, s_string[index]);
+            else if(amount == 4){
+                result.append(1, s_string[index]);
+                result.append(1, s_string[index - 1]);
+            }
+            else if(amount == 5) result.append(1, s_string[index - 1]);
+            else if(amount >= 6 && amount <= 8){
+                result.append(1, s_string[index - 1]);
+                result.append(amount - 5, s_string[index]); 
+            } 
+            else if(amount == 9){
+                result.append(1, s_string[index]);
+                result.append(1, s_string[index - 2]);
+            }
+            num = num % s_int[index];
+            index += 2;
+        }
+        return result;
+        
+    }
+};
