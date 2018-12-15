@@ -82,11 +82,7 @@ public:
     vector<vector<int>> subsets(vector<int>& nums) {
         vector<vector<int>> ans;
         vector<int> curr;
-        for(int i = 0; i <= nums.size(); i++) {
-            vector<int> curr_temp_temp(curr);
-            vector<int> nums_temp_temp(nums);
-            backTracking(ans, curr_temp_temp, nums_temp_temp, i);
-        }
+        for(int i = 0; i <= nums.size(); i++) backTracking(ans, curr, nums, i);
         return ans;
     }
 };
