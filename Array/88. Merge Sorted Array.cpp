@@ -10,14 +10,7 @@ public:
         while(i <= m || j <= n) {
             if(i == m && j == n) return;
             else if(i < m && j == n) i++;
-            else if(i == m && j < n) {
-                nums1.insert(nums1.begin() + i, nums2[j]);
-                nums1.erase(nums1.end() - 1);
-                i++;
-                m++;
-                j++;
-            }
-            else if(nums2[j] <= nums1[i]) {
+            else if((i == m && j < n) || (nums2[j] <= nums1[i])) {
                 nums1.insert(nums1.begin() + i, nums2[j]);
                 nums1.erase(nums1.end() - 1);
                 i++;
