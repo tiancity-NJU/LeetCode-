@@ -86,3 +86,47 @@ public:
         return ans;
     }
 };
+
+
+/*
+以上方法都是一种DFS的方式，当数据规模很大的时候会出现内存溢出的情况，该问题本质上就是找出所有组合，即对应 00000...000 -> 11111...111 转变过程
+中的每一个集合，0代表取，1代表不取
+*/
+
+class Solution {
+public:
+void next(string&s)
+{
+    int pos=s.size()-1;
+    while(s[pos]=='1') pos--;
+    s[pos]='1';
+    pos++;
+    while(pos<s.size()) {s[pos]='0';pos++;}
+}
+
+vector<int>parse(vector<int>&nums,string&s)
+{
+    vector<int>tmp;
+    for(int i=0;i<nums.size();i++)
+    {
+        if(s[i]=='1') tmp.push_back(nums[i]);
+    }
+    return tmp;
+}
+    
+vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+       
+        string s="",end="";
+        for(int i=0;i<nums.size();i++) {s+='0';end+='1';}
+        
+        long long count=1<<(int)nums.size();
+        while(s!=end)
+        {
+            ans.push_back(parse(nums,s));
+            next(s);
+        }
+        ans.push_back(nums);
+        return ans;
+    }
+};
