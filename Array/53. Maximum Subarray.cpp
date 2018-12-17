@@ -17,3 +17,28 @@ public:
         return max_num;
     }
 };
+
+
+/*
+            ztc  方法一致
+
+*/
+
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        
+        int count=INT_MIN;
+        int tmpsum=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(tmpsum<0) tmpsum=nums[i];
+            else tmpsum+=nums[i];
+                
+            count=max(count,tmpsum);
+        }
+        
+        return count; 
+    }
+};
