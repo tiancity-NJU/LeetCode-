@@ -1,11 +1,8 @@
-
 /*
   线性方法或者二分法，二分法注意处理边界，以及在0, size开外的部分
   寻找数值问题   (left<=right)   left=mid+1    right=mid-1;
-
+  authoer: ztc
 */
-
-
 
 class Solution {
 public:
@@ -28,5 +25,27 @@ public:
         }
         return max(left,right);
         
+    }
+};
+
+
+/*
+author: ypz
+*/
+
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        if(nums.size() == 0) return 0;
+        int res;
+        for(int i = 0; i < nums.size(); i++) {
+            if(nums[i] < target){
+                res = i + 1;
+                continue;
+            } 
+            else if(nums[i] == target) return i;
+            else return i;
+        }
+        return res;
     }
 };
