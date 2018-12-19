@@ -41,3 +41,41 @@ public:
         return root;
     }
 };
+
+/*
+  另外一种是使用字典，本质差不多
+*/
+
+
+class Solution {
+public:
+    map<int,int>M;
+    int k;
+    TreeNode*Helper(vector<int>& preorder, vector<int>& inorder,int first,int end,int &k){
+       
+        if(first>end) return NULL;
+        TreeNode* root=new TreeNode(preorder[k]);
+        int pos=M[preorder[k]];
+        if(pos>first)
+            root->left=Helper(preorder,inorder,first,pos-1,++k);
+        if(pos<end)
+            root->right=Helper(preorder,inorder,pos+1,end,++k);
+        
+        return root; 
+    }
+    
+    
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        if(preorder.empty()){
+            return NULL;
+        }
+        int length = preorder.size();
+        for(int i=0;i<inorder.size();i++)
+            M[inorder[i]]=i;
+        
+        k=0;
+        TreeNode *result=Helper(preorder,inorder,0,length-1,k);
+        return result;
+        
+    }
+};
