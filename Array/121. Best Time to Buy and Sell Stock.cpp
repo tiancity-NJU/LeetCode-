@@ -24,9 +24,6 @@ public:
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
-        
-        vector<int>delta(prices.size(),0);
-        
         if(prices.size()==0) return 0;
         
         vector<int>buy(prices.size(),0),sell(prices.size(),0);
