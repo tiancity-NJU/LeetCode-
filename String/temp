@@ -1,0 +1,40 @@
+
+/*
+  写的比较丑，但是思路比较直接
+*/
+
+
+class Solution {
+public:
+    
+    
+    string removeKdigits(string num, int k) {
+        
+        
+        if(num.size()==k) return "0";
+        int tmpRemain=num.size()-k,remain=tmpRemain,pos=-1;
+        int Min,Minpos;
+        string ans="";
+        for(int time=0;time<remain;time++)
+        {
+            Min=num[pos+1];
+            Minpos=pos+1;
+            for(int i=pos+1;i<num.size()-tmpRemain+1;i++)
+            {
+                if(num[i]<Min)
+                {
+                    Min=num[i];
+                    Minpos=i;
+                }
+            }
+            ans+=num[Minpos];
+            pos=Minpos;
+            tmpRemain--;
+        }
+        int tmp=0;
+        
+        while(ans[tmp]=='0') tmp++;
+        return tmp==ans.size()?"0":ans.substr(tmp);
+        
+    }
+};
