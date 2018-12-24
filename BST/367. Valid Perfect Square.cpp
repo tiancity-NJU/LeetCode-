@@ -24,3 +24,29 @@ public:
         return false;
     }
 };
+
+
+/*
+  还有一种就是数学方法，没什么意思的题目
+*/
+
+class Solution {
+public:
+    bool isPerfectSquare(int num) {
+        if (num == 1) return num;
+        long s = 1;
+        int add = 1;
+        for (int i = 0; ; ++ i) {
+            add += 2;
+            s += add;
+            if ( s == num ) {
+                return true;
+            }
+            else if (s > num) {
+                return false;
+            }
+        }
+        return false;
+
+    }
+};
