@@ -24,3 +24,24 @@ public:
         return abs(getLength(root -> left) - getLength(root -> right)) < 2  && isBalanced(root -> left) && isBalanced(root -> right);
     }
 };
+
+/*
+换种写法。
+author: ypz
+*/
+
+class Solution {
+public:
+    int getLength(TreeNode* root) {
+        if(root == NULL) return 0;
+        else return max(getLength(root -> left), getLength(root -> right)) + 1;
+    }
+    
+    bool isBalanced(TreeNode* root) {
+        if(root == NULL) return true;
+        else {
+            if(abs(getLength(root -> left) - getLength(root -> right)) < 2) return isBalanced(root -> left) && isBalanced(root -> right);
+            else return false;
+        }
+    }
+};
