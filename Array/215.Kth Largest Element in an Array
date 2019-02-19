@@ -1,0 +1,76 @@
+/*
+   最蠢的方法，直接排序，另外需要注意添加非法情况的判断，例如k超过nums总长度等,但是这里返回值不好定义
+   时间复杂度O（nlgn）
+   
+*/
+
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        
+        if(nums.size() == 0) return -1;
+        sort(nums.begin(),nums.end());
+        if(k>nums.size()) return nums[0];
+        int count=0;
+        int tmp=nums[nums.size()];
+        for(int i=nums.size()-1;i>=0;i--)
+        {
+            tmp=nums[i];
+            count++;
+            if(count==k) return tmp;
+        }
+        return nums[0];
+    }
+};
+
+
+/*
+    使用堆排序的方法，构建最大堆，弹出k-1个数即可
+    这里只给出核心建堆的代码
+    
+*/
+
+ make_heap(nums.begin(),nums.end());
+ for(int i=0;i<k-1;i++)
+     {
+         pop_heap(nums.begin(),nums.end());
+         nums.pop_back();
+     }
+        
+     return nums[0]; 
+   
+   /*
+   
+    最后就是一种更好的方法，就是利用快速排序里面的partition函数，快排中的partition函数核心就是将小于pivot的置于左边，大于pivot
+   的放在右边，只需要找到对应位置即可，左边小于k则继续右边，大于k则继续左边
+   */
+   class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int high = nums.size();
+        int low = 0;
+        while (low < high) {
+            int i = low;
+            int j = high-1;
+            int pivot = nums[low];
+            while (i <= j) {
+                while (i <= j && nums[i] >= pivot)
+                    i++;
+                while (i <= j && nums[j] < pivot)
+                    j--;
+                if (i < j)
+                    swap(nums[i++],nums[j--]);
+            }
+            swap(nums[low],nums[j]);
+
+            if (j == k-1)
+                return nums[j];
+            else if (j < k-1)
+                low = j+1;
+            else
+                high = j;
+        }
+    }
+};
+     
