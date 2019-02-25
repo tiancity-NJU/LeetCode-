@@ -50,6 +50,8 @@ public:
 /*
     利用两个Head指针list，相互更新，直到其中一个list里面只有一个指针为止，主要要在合并的时候进行奇偶长度的判断
     该方法能够打败99.68%的答案，而且时间复杂度在O(NlgK) 空间复杂度在O(K)，需要借助上一问的两个list合并的函数
+    
+    最后的可以利用二分，while(right-left==1) merge &return    right-left == 0 return 
 
 */
 
