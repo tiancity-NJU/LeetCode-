@@ -1,0 +1,24 @@
+/*
+  
+  三重循环，有通过坐标快速计算面积的公式，网上好像还有多种更好的解法，但是似乎没有找到特别明显O(n2)的解法
+  
+*/
+
+class Solution {
+public:
+    double largestTriangleArea(vector<vector<int>>& points) {
+        
+        double M=0;
+        for(int i=0;i<points.size();i++)
+        {
+            for(int j=0;j<points.size();j++)
+            {
+                for(int k=0;k<points.size();k++)
+                {
+                    M=max(M,0.5*(points[i][0]*(points[j][1]-points[k][1]) + points[j][0]*(points[k][1]-points[i][1]) + points[k][0]*(points[i][1]-points[j][1])));   
+                }
+            }
+        }
+        return M;
+    }                 
+};
