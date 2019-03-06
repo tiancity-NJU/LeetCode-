@@ -1,0 +1,47 @@
+/*
+    典型的二叉树问题，利用前序和后序构造二叉树
+    利用递归的方法，每次找到根节点，左子树，右子树的范围，循环递归即可，注意当某个子树为空树的时候s可能比e大，所以加一个判断条件
+    这一步容易疏忽，导致报错
+*/
+
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+    
+private:
+    
+    TreeNode* run(vector<int>&pre,vector<int>&post,int pres,int pree,int posts,int poste)
+    {
+      
+        if(pres>pree || posts>poste || pre[pres]!=post[poste]) return NULL;
+        TreeNode* head=new TreeNode(pre[pres]);
+        if(posts==poste) return head;
+        
+        int pos;
+        for(pos=posts;pos<poste;pos++)
+        {
+            if(post[pos]==pre[pres+1]) break;
+        }
+
+        int leftLen=pos-posts+1;
+        
+        head->left=run(pre,post,pres+1,pres+leftLen,posts,posts+leftLen-1);
+        head->right=run(pre,post,pres+leftLen+1,pree,posts+leftLen,poste-1);
+        return head;
+        
+    }
+    
+public:
+    TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
+        TreeNode* head=run(pre,post,0,pre.size()-1,0,post.size()-1);
+        return  head;
+    }
+};
