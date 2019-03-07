@@ -1,0 +1,21 @@
+
+/*
+  无聊的题目。。。
+  一位一位算的话最后会反过来，因此利用一个长度和num一样的111111来异或即可
+
+*/
+
+class Solution {
+public:
+    int findComplement(int num) {
+        
+        int ans=0;
+        int ori=num;
+        while(num!=0)
+        {
+            ans=1+(ans<<1);
+            num=num>>1;
+        }
+        return ans^ori;
+    }
+};
