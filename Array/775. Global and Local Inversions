@@ -1,0 +1,31 @@
+/*
+    核心就是判断一个数组除了相邻数字是逆序以外没有其他逆序对的数组
+*/
+
+
+
+class Solution {
+public:
+    bool isIdealPermutation(vector<int>& A) {
+        
+        for(int i=0;i<A.size()-1;i++)
+        {
+            if(A[i]-A[i+1]>1 || (i<A.size()-2&&A[i]>A[i+2])) return false;
+        }
+        return true;
+    }
+};
+
+/*
+     以上解法可解释性有点差，以下是官方解法
+*/
+
+bool isIdealPermutation(vector<int>& A) {
+        int len = A.size();
+        for (int i = 0; i < len; i++)
+        {
+            if (abs(A[i] - i) > 1) return false;
+        }
+        
+        return true;
+    }
