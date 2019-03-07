@@ -1,0 +1,49 @@
+/*
+
+  寻找能够构成斐波拉契形式的最长子序列的长度，这种一看求长度而不是具体解的首先想到DP，
+  问题在于如何构造DP，一维数组代表以该元素为末尾元素的最大长度显然不太合适，一维不行那就两位
+  DP[i][j]代表以i j结尾的子序列最大长度
+  后续就简单了，另外需要注意  长度为2的不算，要最后判断是否是0，即答案只可能是   0,3,4,5,6....
+  
+  */
+
+
+class Solution {
+public:
+    int lenLongestFibSubseq(vector<int>& A) {
+        
+        vector<vector<int>>DP(A.size(),vector<int>(A.size(),0));
+        unordered_map<int,int>pos;
+        
+        for(int i=0;i<A.size();i++)
+        {
+            pos[A[i]]=i;
+            for(int j=i;j<A.size();j++)
+            {
+                if(i==j) DP[i][j]=1;
+                DP[i][j]=2;
+            }
+        }
+        
+        for(int i=0;i<A.size();i++)
+        {
+            for(int j=i+1;j<A.size();j++)
+            {
+        
+                if(pos.find(A[j]-A[i])==pos.end()||pos[A[j]-A[i]]>=i) continue;
+              
+                DP[i][j]=DP[pos[A[j]-A[i]]][i]+1;
+            }
+        }
+        
+        int ans=0;
+        for(int i=0;i<A.size();i++)
+        {
+            for(int j=i;j<A.size();j++)
+            {
+                ans=max(ans,DP[i][j]);
+            }
+        }
+        return ans>2?ans:0;
+    }
+};
