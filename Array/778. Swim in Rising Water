@@ -1,0 +1,67 @@
+/*
+  
+     这种不是对元素长度而是对取值范围二分的方法最近经常出现，例如一个横竖都是递增的二维数组找第K小的值，都是利用数值二分的思想
+     该题核心即找到一个数，能有一条路径上的最大值等于它并且这个极大值是所有路径中最小的即可
+     利用数值二分搭配DFS，另外注意二分结束条件的判断，利用答案是14，二分到13 14的时候，下一步会变成13 13，所以要判断最后一次能不能成功
+     不能成功就+1
+
+*/
+
+class Solution {
+
+private:
+    
+    int direction[4][2]={{0,1},{1,0},{-1,0},{0,-1}};
+    void dfs(vector<vector<int>>&grid,vector<vector<int>>&visited,int left,int right,int threshold)
+    {
+        int h=grid.size();
+        int w=grid[0].size();
+        
+        if(left<0||left>=h||right<0||right>=h||visited[left][right]) return;
+        if(grid[left][right]>threshold) return;
+        visited[left][right]=1;
+        
+        for(int i=0;i<4;i++)
+        {
+            if(left+direction[i][0]>=0&&left+direction[i][0]<h&&right+direction[i][1]>=0&&right+direction[i][1]<w)
+                dfs(grid,visited,left+direction[i][0],right+direction[i][1],threshold);
+        }
+    }
+public:
+    int swimInWater(vector<vector<int>>& grid) {
+        
+        int left=0;
+        int right=0;
+        
+        if(grid.size()==0) return 0;
+        
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid.size();j++){
+                left=min(left,grid[i][j]);
+                right=max(right,grid[i][j]);
+            }
+        }
+        left=grid[0][0];
+        int mid;
+        int flag=0;
+        while(left<=right)
+        {
+            mid=left+(right-left)/2;
+            vector<vector<int>>visited(grid.size(),vector<int>(grid[0].size(),0));
+            dfs(grid,visited,0,0,mid);
+            cout<<left<<' '<<right<<endl;
+            if(visited.back().back()==0)
+            {
+                flag=1;
+                left=mid+1;
+            }
+            else
+            {
+                flag=0;
+                right=mid-1;
+            }
+        }
+        return flag?mid+1:mid;
+    }
+};
