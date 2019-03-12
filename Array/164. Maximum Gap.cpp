@@ -22,36 +22,66 @@ public:
 };
 
 
-/*
 
-  想了半天并没有什么其他的思路，看了别人的方法，主要是使用了桶排序的策略，具体还不是非常明白
+
+
+/*
+    比较难的一题，利用桶排序的思想，按照取值范围构建一个个范围为(max-min)/size()的桶，并且最大值不可能小于桶内差异，如果等于的话即使等差数列
+    基于这一点，每个桶记录该范围内的最大值和最小值，每次相邻的桶之间比较即可
+    
 
 */
+
 
 class Solution {
 public:
     int maximumGap(vector<int>& nums) {
-                
-        for (int i=0; i<kIntSize; ++i) countingSort(nums,i);        
-        int maxgap = 0;
-        for (int i=0; i<(int)(nums.size())-1;++i) maxgap=max(maxgap,nums[i+1]-nums[i]);
-        return maxgap;
-    }    
-    
-private:
-    void countingSort(vector<int> &nums, int byteidx) {
-        vector<int> buckets(1<<kByteSize,0);
-        vector<int> result(nums.size(),0);
-        for (const auto n : nums) ++buckets[applyByteMask(n,byteidx)];
-        for (int i=1; i<buckets.size(); ++i) buckets[i]+=buckets[i-1];
-        for (int i=nums.size()-1; i>=0; --i) result[--buckets[applyByteMask(nums[i],byteidx)]]=nums[i];
-        swap(nums,result);        
+        if (nums.size() < 2) return 0;
+        int maxNum = nums[0];
+        int minNum = nums[0];
+        for (int i : nums) {
+            maxNum=max(maxNum,i);
+            minNum=min(minNum,i);
+        }
+       
+        int len = (maxNum - minNum) / nums.size() + 1;
+        vector<vector<int>> buckets((maxNum - minNum) / len + 1);
+        
+        for(int i=0;i<nums.size();i++)
+        {
+            int pos=(nums[i]-minNum)/len;
+            if(buckets[pos].empty())
+            {
+                buckets[pos].push_back(nums[i]);
+                buckets[pos].push_back(nums[i]);
+            }
+            else
+            {
+                buckets[pos][0]=min(buckets[pos][0],nums[i]);
+                buckets[pos][1]=max(buckets[pos][1],nums[i]);                
+            }
+        }
+        int gap=0;
+        int pre=0;
+        int i=0;
+        for(i=0;i<(maxNum-minNum)/len;i++)
+        {
+            if(!buckets[i].empty())
+            {
+                gap=buckets[i][1]-buckets[i][0];
+                break;
+            }
+        }
+        pre=i;
+        for(;i<(maxNum-minNum)/len+1;i++)
+        {
+            if(!buckets[i].empty())
+            {
+                gap=max(gap,buckets[i][0]-buckets[pre][1]);
+                pre=i;
+            }
+        }
+        return gap;
+        
     }
-    
-    int applyByteMask(int n, int byteidx) {
-        static const int bytemask = (1<<kByteSize)-1;
-        return (n>>(byteidx*kByteSize))&bytemask;
-    }
-    
-    static const int kIntSize  = sizeof(int);      
 };
