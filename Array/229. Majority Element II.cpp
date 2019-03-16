@@ -31,3 +31,55 @@ public:
         return ret;
     }
 };
+
+
+/*
+      那么在数组中找到所有大于N/k的数怎么办？
+      大于N/k的数最多有k-1个，用一个map存着k-1个数
+      （答案参考博客）
+      
+      在map中，新来一个元素如果在map，则++，不在则插入，如果map的大小到了k，那么对map的每一个值都--，如果=0，则从map抛弃
+      （那刚加入的不是也被删掉了？）
+      
+      大于一半 k=2  大于N/3  k=3
+*/
+
+
+vector<int>  printMaxTwo(const vector<int> &A , const int k)
+{
+    typedef map<int,int>::value_type Elem;
+    const int n = A.size();
+    map<int,int> idxs;
+    for(int i=0;i<n;++i)
+    {
+        if(idxs.find(A[i]) != idxs.end())
+        {
+            ++idxs[A[i]];
+        }
+        else
+        {
+            idxs.insert(Elem(A[i],1));
+            if(idxs.size() == k)
+            {
+                //if there is a full level in the box
+                for(auto iter = idxs.begin(); iter != idxs.end();)
+                {
+                    --((*iter).second);
+                    if((*iter).second == 0) iter = idxs.erase(iter);
+                    else ++iter;
+                }
+            }       
+        }
+    }
+    //If there exists no element in the final box
+    vector<int> ret;
+    for(auto a: idxs) a.second = 0;
+    for(auto a: A)
+    {
+        if(idxs.find(a) != idxs.end())
+            ++idxs[a];
+    }
+    for(auto a: idxs)
+        if(a.second >= n/k) ret.push_back(a.first);
+    return ret;
+
