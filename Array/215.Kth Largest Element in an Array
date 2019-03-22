@@ -1,9 +1,11 @@
 /*
-   最蠢的方法，直接排序，另外需要注意添加非法情况的判断，例如k超过nums总长度等,但是这里返回值不好定义
-   时间复杂度O（nlgn）
-   
+author: ztc
 */
 
+/*
+   最蠢的方法，直接排序，另外需要注意添加非法情况的判断，例如k超过nums总长度等,但是这里返回值不好定义
+   时间复杂度O（nlgn）
+*/
 
 class Solution {
 public:
@@ -28,7 +30,6 @@ public:
 /*
     使用堆排序的方法，构建最大堆，弹出k-1个数即可
     这里只给出核心建堆的代码
-    
 */
 
  make_heap(nums.begin(),nums.end());
@@ -41,7 +42,6 @@ public:
      return nums[0]; 
    
    /*
-   
     最后就是一种更好的方法，就是利用快速排序里面的partition函数，快排中的partition函数核心就是将小于pivot的置于左边，大于pivot
    的放在右边，只需要找到对应位置即可，左边小于k则继续右边，大于k则继续左边
    */
@@ -73,4 +73,25 @@ public:
         }
     }
 };
-     
+  
+  
+/*
+author: ypz  
+利用最小堆
+*/
+  
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        if(nums.size() < k || k == 0) return 0;
+        priority_queue<int, vector<int>, greater<int>> p;
+        for(int i = 0; i < k; i++) p.push(nums[i]);
+        for(int i = k; i < nums.size(); i++) {
+            if(nums[i] > p.top()) {
+                p.pop();
+                p.push(nums[i]);
+            }
+        }
+        return p.top();
+    }
+};
