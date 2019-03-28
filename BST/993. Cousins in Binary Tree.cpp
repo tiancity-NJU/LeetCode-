@@ -9,6 +9,7 @@
  */
 
 /*
+author: ypz
 BFS，保存每一层节点与其父节的对，然后判断两个节点是否在同一层且父亲不同。
 */
 class Solution {
