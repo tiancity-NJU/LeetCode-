@@ -1,14 +1,11 @@
 /*
-
+    author: ztc
     可以参照DFS里面的方法利用回溯的方法解决，也可以利用DP的方法解决
 */
 
 class Solution
 {
 public:
-  
-    
-    
     
     bool isMatch(string s, string p)
     {
@@ -40,3 +37,38 @@ public:
         return DP[slen][plen];
     }
 };
+
+
+/*
+author: ypz
+利用递归
+*/
+
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        if(p.size() == 0) {
+            if(s.size() == 0) return true;
+            else return false;
+        }
+        if(p[1] != '*') {
+            if(p[0] == s[0] || (s[0] != '\0' && p[0] == '.'))
+                return isMatch(s.substr(1), p.substr(1));
+            else
+                return false;
+        }
+        else {
+            if(isMatch(s, p.substr(2)))
+                return true;
+            int index = 0;
+            while(index < s.size() && (p[0] == s[index] || p[0] == '.')) {
+                index++;
+                if(isMatch(s.substr(index), p.substr(2)))
+                    return true;
+            }
+            return false;
+        }   
+    }
+};
+
+
