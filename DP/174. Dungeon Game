@@ -1,0 +1,38 @@
+
+
+class Solution {
+    
+/*
+
+    想到的方法肯定是DP，但是单纯的从左上角到右下角的方式，很难判断后续是否是最佳的
+    这种依赖后续状态的就要换一个思路，能否从右下角往左上角推断每个位置需要的最小的能量
+
+    反过来思考，DP[i][j]代表走到这个位置之前最少需要多少点血，从右下角往上，即可
+
+*/
+public:
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        if(dungeon.size()==0) return 0;
+        int h = dungeon.size();
+        int w = dungeon[0].size();
+        vector<vector<int>>DP(h+1,vector<int>(w+1,0));
+        DP[h][w] = 1;
+        for(int i=h;i>=1;i--)
+        {
+            for(int j=w; j>=1; j--)
+            {
+               
+                if(i == h && j == w) DP[i][j] = max(1, DP[i][j] - dungeon[i-1][j-1]);
+                else if(i == h)
+                    DP[i][j] = max(1, DP[i][j+1]-dungeon[i-1][j-1]);
+                else if(j == w)
+                    DP[i][j] = max(1, DP[i+1][j]-dungeon[i-1][j-1]);
+                else
+                    DP[i][j] = max(1, min(DP[i+1][j], DP[i][j+1])-dungeon[i-1][j-1]);
+            }
+        }
+        
+        return DP[1][1];
+        
+    }
+};
