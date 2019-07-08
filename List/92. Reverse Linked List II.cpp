@@ -1,6 +1,4 @@
-
-
-/*
+/*  author: ztc
     本身难度不大，但是链表的问题主要就是细节，需要多少个指针，如果处理边界情况，防止空指针等问题
     首先找到待翻转部分的前一个指针start和翻转部分的最后一个指针end，分两种情况：
      start->next=end  只差一个 那么不用翻转
@@ -9,8 +7,6 @@
      主要end!=NULL,这样的话能够保证tmp1 tmp2 不可能为空
      另外一题group 翻转方法也是一样，不断调用这个函数即可。
 */
-
-
 
 /**
  * Definition for singly-linked list.
@@ -47,8 +43,7 @@ public:
         start->next->next=tmp3;
         start->next=tmp2;
     }
-    
-    
+       
     ListNode* reverseBetween(ListNode* head, int m, int n) {
         
         if(m>=n) return head;
@@ -70,7 +65,49 @@ public:
         }
        
         rever(start,end);
-        
         return newhead->next;
     }
 };
+
+
+/*
+author: ypz
+在翻转范围内向前移动，不断改变指针方向，最后注意边界情况。
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        if(m == n) return head;
+        ListNode* dummy = new ListNode(0);
+        dummy -> next = head;
+        ListNode* prepre = dummy;
+        int count = 1;
+        while(count < m) {
+            count++;
+            prepre = prepre -> next;
+        }
+        ListNode* pre = prepre;
+        ListNode* cur = pre -> next;
+        for(int i = 0; i < n - m + 1; i++) {
+            ListNode* nxt = cur -> next;
+            cur -> next = pre;
+            pre = cur;
+            cur = nxt;
+        }
+        prepre -> next -> next = cur;
+        prepre -> next = pre;
+        return dummy -> next;
+        
+    }
+};
+
