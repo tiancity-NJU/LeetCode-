@@ -1,9 +1,7 @@
-
-
 /*
+author: ztc
   一开始看到这个问题，最简单的想法还是DFS的方式，并且在其中加入一些约束，跳出一些现有长度已经大于最短长度的位置，虽然这样能够缩短时间，但是还是会超时
   一般dfs解决不了的问题就需要考虑DP的方法了
-  
 */
 
 class Solution {
@@ -26,8 +24,7 @@ public:
             dfs(remain-i*i,len+1,ans);
         }
     }
-    
-    
+       
     int numSquares(int n) {
         int ans=INT_MAX;
         dfs(n,0,ans);
@@ -36,10 +33,9 @@ public:
 };
 
 /*
-
+   author: ztc
    使用DP，可以发现 DP[i]=min(DP[i-1],DP[i-4],DP[i-9].....)+1
    发现了规律就好办了
-
 */
 class Solution {
 public:
@@ -56,3 +52,21 @@ public:
         return DP.back();
     }
 };
+
+/*
+author: ypz
+*/
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> dp(n + 1, INT_MAX);
+        dp[0] = 0;
+        for(int i = 1; i < n + 1; i++) {
+            for(int j = 1; j * j <= i; j++)
+                dp[i] = min(dp[i], dp[i - j * j] + 1);
+        }
+        return dp.back();
+    }
+};
+
+
