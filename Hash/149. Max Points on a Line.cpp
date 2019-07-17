@@ -1,4 +1,6 @@
-// 来自https://leetcode.com/problems/max-points-on-a-line/discuss/47106/C%2B%2B-O(n2)-solution-for-your-reference，用最大公约数来防止求斜率带来的float型运算
+// 来自https://leetcode.com/problems/max-points-on-a-line/discuss/47106/C%2B%2B-O(n2)-solution-for-your-reference
+// 用最大公约数来防止求斜率带来的float型运算
+
 class Solution {
 public:
     int GCD(int a, int b) {
